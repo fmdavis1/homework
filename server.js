@@ -1,5 +1,8 @@
 //load express
 const express = require('express')
+
+const answersArray = require('./Models/answersMB')
+
 //create an instance of express
 const app = express()
 const PORT = 3000
@@ -30,6 +33,27 @@ app.get('/greetings/:name', (req, res) => {
 app.get('/tip/:total/:tipPercentage',(req,res) => {
     const  results = Number((`${req.params.tipPercentage}` /100) * `${req.params.total}`)
     res.render('tip',{results})
+})
+
+let question = 'Will%20I%20Be%20A%20Millionaire'
+const space = ' '
+const twentyP = '%20'
+
+
+app.get('/magic/question',(req,res) => {
+    const stringIndex = Math.floor(Math.random() * answersArray.length);
+    const answer = answersArray[stringIndex]
+
+    function splitString(stringToSplit, separator) {
+        const arrayOfStrings = stringToSplit.split(separator)
+        
+        newQuestion = arrayOfStrings.join(space)
+      return newQuestion
+    }
+    
+    newQuestion = splitString(question, twentyP)
+    res.render('magicBall', {question: newQuestion, answer: answer})
+    
 })
 
 

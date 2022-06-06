@@ -27,6 +27,11 @@ app.get('/greetings/:name', (req, res) => {
     res.send(`Greetings, ${req.params.name}!`)
 })
 
+app.get('/tip/:total/:tipPercentage',(req,res) => {
+    const  results = Number((`${req.params.tipPercentage}` /100) * `${req.params.total}`)
+    res.render('tip',{results})
+})
+
 
 
 app.listen(PORT, () => {

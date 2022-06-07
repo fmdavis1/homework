@@ -6,6 +6,7 @@ const answersArray = require('./Models/answersMB')
 //create an instance of express
 const app = express()
 const PORT = 3000
+let numBottles = 99
 
 //Middleware functions
 //They update the request as soon as they come in.
@@ -26,6 +27,29 @@ app.set('view engine', 'ejs')
 app.set('views', './Views')
 
 //Root route
+app.get('/',(req, res) => {
+    
+    // if(numBottles === 0){
+    //     numBottles = 99
+    //     res.render('/restart', {numBottles: numBottles} )
+        
+    // }else{
+     
+    res.render('home', {h1:`${numBottles} bottles of beer on the wall!`,numBottles: numBottles})
+    numBottles = numBottles -1
+
+    // }
+})
+
+app.get('/:number_of_bottles', (req, res) => {
+
+    
+    res.render('noOfBottles', {numBottles: `${req.params.number_of_bottles}`, h1: ` bottles of beer on the wall!`, link: `${req.params.number_of_bottles}` -1}  )
+    //   console.log(numBottles)
+    
+})
+
+
 app.get('/greetings/:name', (req, res) => {
     res.send(`Greetings, ${req.params.name}!`)
 })
